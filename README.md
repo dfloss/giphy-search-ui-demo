@@ -1,4 +1,28 @@
-# Getting Started with Create React App
+# Movista Interview UI
+
+This is a PWA for searching giphy images!
+
+# Setup
+
+## Local Dev
+
+### Environment variables
+
+create a `.env.local` in the root of the project directory with:
+
+```
+REACT_APP_GIPHY_API_KEY=<GIPHY_API_KEY>
+```
+
+where `<GIPHY_API_KEY>` is replaced with a valid giphy api key
+
+# Outstanding Issues
+
+## Storybook peer dependency warnings
+
+Looks like this is a known issue and will be fixed in a future release: https://github.com/storybookjs/storybook/pull/11628
+
+# Create React App Instructions
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

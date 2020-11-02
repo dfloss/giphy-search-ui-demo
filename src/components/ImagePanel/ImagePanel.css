@@ -1,0 +1,9 @@
+#image-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 800px;
+}
+#image-panel > * {
+    margin: 8px;
+}

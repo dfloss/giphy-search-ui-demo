@@ -1,9 +1,15 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import App from './App'
+import { setupIntersectionObserverMock } from 'test-helpers/mock-intersection-observer'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe('App', () => {
+    beforeAll(() => {
+        setupIntersectionObserverMock()
+    })
+    test('renders search field', () => {
+        render(<App />)
+        const searchLabel = screen.getByText(/Search:/i)
+        expect(searchLabel).toBeInTheDocument()
+    })
+})
