@@ -48,34 +48,6 @@ export const noResults = () => {
     return imagePanelStoryTemplate(store)
 }
 
-export const threeResults = () => {
-    const store = getImageSearchStateStore({
-        searchText: 'vicuna',
-        totalResultsCount: 3,
-        images: [
-            {
-                url: 'llama1.gif',
-                alt: 'llama one',
-                imageWidth: 480,
-                imageHeight: 271,
-            },
-            {
-                url: 'llama2.gif',
-                alt: 'llama two',
-                imageWidth: 300,
-                imageHeight: 225,
-            },
-            {
-                url: 'llama3.gif',
-                alt: 'llama three',
-                imageWidth: 400,
-                imageHeight: 225,
-            },
-        ],
-    })
-    return imagePanelStoryTemplate(store)
-}
-
 export const twentyResults = () => {
     const mockState = {
         imageSearch: {
