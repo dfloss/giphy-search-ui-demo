@@ -1,8 +1,11 @@
 #image-panel {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
     width: 800px;
+    color: white;
 }
 #image-panel > * {
     margin: 8px;

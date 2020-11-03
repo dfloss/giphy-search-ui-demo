@@ -2,4 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 2rem;
+}
+.search-input-label {
+    color: white;
+}
+.submit-button {
+    background-color: orchid;
+    color: white;
+    font-weight: bold;
+    border-radius: 24px;
+    padding: 8px 16px;
 }

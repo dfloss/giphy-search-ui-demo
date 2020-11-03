@@ -9,7 +9,7 @@ describe('App', () => {
     })
     test('renders search field', () => {
         render(<App />)
-        const searchLabel = screen.getByText(/Search:/i)
+        const searchLabel = screen.getByPlaceholderText('find a gif!')
         expect(searchLabel).toBeInTheDocument()
     })
 })

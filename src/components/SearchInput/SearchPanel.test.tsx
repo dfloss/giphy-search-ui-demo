@@ -18,7 +18,7 @@ describe('Search Panel', () => {
 
         const store = configureStore<AppState>(getDefaultMiddleware())()
         const view = render(searchPanel({ store }))
-        const input = view.getByLabelText('Search:')
+        const input = view.getByPlaceholderText('find a gif!')
         const submitButton = view.getByText('Submit')
         fireEvent.change(input, { target: { value: 'test' } })
         fireEvent.click(submitButton)
@@ -32,7 +32,7 @@ describe('Search Panel', () => {
 
         const store = configureStore<AppState>(getDefaultMiddleware())()
         const view = render(searchPanel({ store }))
-        const input = view.getByLabelText('Search:')
+        const input = view.getByPlaceholderText('find a gif!')
         fireEvent.change(input, { target: { value: 'test' } })
         fireEvent.keyDown(input, { key: 'Enter' })
 

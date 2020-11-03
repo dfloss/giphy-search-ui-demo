@@ -10,7 +10,9 @@ function App() {
         <Provider store={store}>
             <div className="App">
                 <SearchPanel />
-                <ImagePanel />
+                <div className="image-panel-container">
+                    <ImagePanel />
+                </div>
             </div>
         </Provider>
     )
