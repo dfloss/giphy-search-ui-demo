@@ -16,6 +16,14 @@ REACT_APP_GIPHY_API_KEY=<GIPHY_API_KEY>
 
 where `<GIPHY_API_KEY>` is replaced with a valid giphy api key
 
+### Running
+
+`npm start` will start the development server
+
+### Storybook
+
+`npm run storybook` will start the storybook server on port 6006, this can be used to view components in isolationg
+
 # Outstanding Issues
 
 ## Storybook peer dependency warnings
