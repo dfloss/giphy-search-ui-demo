@@ -1,10 +1,10 @@
 #image-panel {
+    width: 800px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    width: 800px;
     color: white;
 }
 #image-panel > * {

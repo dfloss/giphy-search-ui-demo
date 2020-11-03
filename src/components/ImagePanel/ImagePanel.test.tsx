@@ -45,7 +45,7 @@ describe('Image Panel', () => {
     it('displays the correct status message when no search results were found', () => {
         const store = getImageSearchStateStore({
             searchText: 'test',
-            areResultsRemaining: false,
+            totalResultsCount: 0,
             images: [],
         })
         const view = render(withStore(store, <ImagePanel />))
@@ -54,8 +54,11 @@ describe('Image Panel', () => {
     it('displays the correct status message no search results are remaining', () => {
         const store = getImageSearchStateStore({
             searchText: 'test',
-            areResultsRemaining: false,
-            images: ['test1', 'test2'],
+            totalResultsCount: 2,
+            images: [
+                { url: 'test1', alt: 'test1', imageHeight: 0, imageWidth: 0 },
+                { url: 'test2', alt: 'test2', imageHeight: 0, imageWidth: 0 },
+            ],
         })
         const view = render(withStore(store, <ImagePanel />))
         expect(view.getByText("That's all of them!")).toBeInTheDocument()

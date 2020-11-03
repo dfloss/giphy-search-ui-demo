@@ -1,16 +1,12 @@
-import { useIntersect } from 'hooks/useIntersect'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { loadMoreImages } from 'store/image-search-slice'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { imageSearchReducer } from 'store/image-search-slice'
 import { AppState } from 'store/root-reducer'
 
 /**
  * Component that displays image search status and triggers additional image loading
  */
-export const ImageLoader: React.FC = () => {
-    const areResultsRemaining = useSelector(
-        (state: AppState) => state.imageSearch.areResultsRemaining
-    )
+export const ImageLoadingStatus: React.FC = () => {
     const isLoading = useSelector(
         (state: AppState) => state.imageSearch.isLoading
     )
@@ -23,15 +19,12 @@ export const ImageLoader: React.FC = () => {
     const imageCount = useSelector(
         (state: AppState) => state.imageSearch.images.length
     )
-    const [ref, entry] = useIntersect<HTMLDivElement>({ root: null })
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (entry?.isIntersecting === true) {
-            console.log('loading more images')
-            dispatch(loadMoreImages())
-        }
-    }, [entry, dispatch])
+    const areResultsRemaining = useSelector(
+        (state: AppState) =>
+            state.imageSearch.totalResultsCount === 0 ||
+            state.imageSearch.totalResultsCount ===
+                imageSearchReducer.length + 1
+    )
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -39,11 +32,10 @@ export const ImageLoader: React.FC = () => {
         return <p>Search Error! please try resubmitting the images search</p>
     } else if (isFreshSearch) {
         return <p>Patiently awaiting an image search =)</p>
-    } else if (areResultsRemaining) {
-        //TODO: handle ref triggering loading more images
-        return <p ref={ref}>MOAR images on the way!</p>
     } else if (imageCount === 0) {
         return <p>No images found</p>
+    } else if (areResultsRemaining) {
+        return <p>MOAR images on the way!</p>
     } else {
         return <p>That's all of them!</p>
     }

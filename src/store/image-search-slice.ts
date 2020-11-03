@@ -4,7 +4,7 @@ import { GiphyImageSearchResponse } from 'services/giphy/giphy-types'
 import { AppDispatch } from './configure-store'
 import { AppState } from './root-reducer'
 
-interface ImageData {
+export interface ImageInformation {
     url: string
     alt: string
     imageHeight: number
@@ -12,10 +12,11 @@ interface ImageData {
 }
 interface ImageSearchState {
     searchText: string
-    images: ImageData[]
+    images: ImageInformation[]
     isLoading: boolean
     isLastSearchError: boolean
-    areResultsRemaining: boolean | null
+    totalResultsCount: number
+    isNewSearchPending: boolean
 }
 
 export const initialImageSearchState: ImageSearchState = {
@@ -23,7 +24,8 @@ export const initialImageSearchState: ImageSearchState = {
     images: [],
     isLoading: false,
     isLastSearchError: false,
-    areResultsRemaining: null,
+    isNewSearchPending: false,
+    totalResultsCount: 0,
 }
 
 export const submitSearch = createAsyncThunk(
@@ -65,14 +67,8 @@ const getImages = (giphyResponse: GiphyImageSearchResponse) =>
  * Based on the response from the giphy search endpoint
  * @param giphyResponse response from giphy search request
  */
-const getAreResultsRemaining = (giphyResponse: GiphyImageSearchResponse) => {
-    // if the total number of images loaded (offset + count) is less than the total count
-    // there should more results
-    return (
-        giphyResponse.pagination.offset + giphyResponse.pagination.count <
-        giphyResponse.pagination.total_count
-    )
-}
+const getTotalResultsCount = (giphyResponse: GiphyImageSearchResponse) =>
+    giphyResponse.pagination.total_count
 
 const imageSearchSlice = createSlice({
     name: 'imageSearch',
@@ -82,31 +78,34 @@ const imageSearchSlice = createSlice({
         builder.addCase(submitSearch.pending, (state, action) => {
             state.searchText = action.meta.arg
             state.isLoading = true
+            state.isNewSearchPending = true
         })
         builder.addCase(submitSearch.fulfilled, (state, action) => {
             //Grab the fixed height url to display in the list
             state.images = getImages(action.payload)
-            state.areResultsRemaining = getAreResultsRemaining(action.payload)
+            state.totalResultsCount = getTotalResultsCount(action.payload)
             state.isLoading = false
             state.isLastSearchError = false
+            state.isNewSearchPending = false
         })
         builder.addCase(submitSearch.rejected, (state, action) => {
             state.isLoading = false
-            state.areResultsRemaining = false
+            state.totalResultsCount = 0
             state.isLastSearchError = true
+            state.isNewSearchPending = false
         })
         builder.addCase(loadMoreImages.pending, (state) => {
             state.isLoading = true
         })
         builder.addCase(loadMoreImages.fulfilled, (state, action) => {
             state.images = state.images.concat(getImages(action.payload))
-            state.areResultsRemaining = getAreResultsRemaining(action.payload)
+            state.totalResultsCount = getTotalResultsCount(action.payload)
             state.isLoading = false
             state.isLastSearchError = false
         })
         builder.addCase(loadMoreImages.rejected, (state) => {
             state.isLastSearchError = true
-            state.areResultsRemaining = false
+            state.totalResultsCount = 0
             state.isLoading = true
         })
     },

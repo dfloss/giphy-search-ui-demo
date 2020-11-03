@@ -49,21 +49,21 @@ describe('Image Search Redux State', () => {
             expect(result.searchText).toBe('test')
             expect(result.isLastSearchError).toBe(false)
             expect(result.images).toEqual(giphyExpected4)
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(4)
         })
         it('sets remaining results to true when a search returns with additional results', async () => {
             setGiphySearchMock(giphySearchMoreResults)
             const store = getStore()
             await store.dispatch(submitSearch('test'))
             const result = store.getState().imageSearch
-            expect(result.areResultsRemaining).toBe(true)
+            expect(result.totalResultsCount).toBe(8444)
         })
         it('sets remaining results to false when a search returns with no results', async () => {
             setGiphySearchMock(giphySearchNoResults)
             const store = getStore()
             await store.dispatch(submitSearch('test'))
             const result = store.getState().imageSearch
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(0)
         })
         it('sets error state when giphy service fails', async () => {
             setGiphySearchMock(null, 500)
@@ -71,7 +71,7 @@ describe('Image Search Redux State', () => {
             await store.dispatch(submitSearch('test'))
             const result = store.getState().imageSearch
             expect(result.isLastSearchError).toBe(true)
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(0)
         })
     })
     describe('loadAdditionalImages', () => {
@@ -104,7 +104,7 @@ describe('Image Search Redux State', () => {
                 },
                 ...giphyExpected4,
             ])
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(4)
         })
         it('sets areResultsRemaining to true when results when the search contains more results', async () => {
             setGiphySearchMock(giphySearchMoreResults, 200, 'loadMoreImages', 1)
@@ -125,7 +125,7 @@ describe('Image Search Redux State', () => {
             await store.dispatch(loadMoreImages())
             const result = store.getState().imageSearch
             expect(result.isLastSearchError).toBe(false)
-            expect(result.areResultsRemaining).toBe(true)
+            expect(result.totalResultsCount).toBe(8444)
         })
         it('sets remaining results to false when a search returns with no results', async () => {
             setGiphySearchMock(giphySearchNoResults)
@@ -145,7 +145,7 @@ describe('Image Search Redux State', () => {
             })
             await store.dispatch(loadMoreImages())
             const result = store.getState().imageSearch
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(0)
         })
         it('sets error state when giphy service fails', async () => {
             setGiphySearchMock(null, 500)
@@ -166,7 +166,7 @@ describe('Image Search Redux State', () => {
             await store.dispatch(loadMoreImages())
             const result = store.getState().imageSearch
             expect(result.isLastSearchError).toBe(true)
-            expect(result.areResultsRemaining).toBe(false)
+            expect(result.totalResultsCount).toBe(0)
         })
     })
 })
