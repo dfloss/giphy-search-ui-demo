@@ -10,6 +10,36 @@ import giphySearchMoreResults from 'services/giphy/mocks/giphy-search-20-results
 import giphySearchNoResults from 'services/giphy/mocks/giphy-search-no-results.json'
 
 describe('Image Search Redux State', () => {
+    const giphyExpected4 = [
+        {
+            url:
+                'https://media0.giphy.com/media/bFvJkz0GyIi76/200w.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200w.gif',
+            alt: 'petting zoo spit GIF by Cheezburger',
+            imageHeight: 112,
+            imageWidth: 200,
+        },
+        {
+            url:
+                'https://media4.giphy.com/media/l2YWErhGkiqIYHqWA/200w.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200w.gif',
+            alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
+            imageHeight: 132,
+            imageWidth: 200,
+        },
+        {
+            url:
+                'https://media1.giphy.com/media/l2YWFaTbEGTtMuo1O/200w.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200w.gif',
+            alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
+            imageHeight: 132,
+            imageWidth: 200,
+        },
+        {
+            url:
+                'https://media2.giphy.com/media/l2YWiNCw0rjXUnNPW/200w.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200w.gif',
+            alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
+            imageHeight: 132,
+            imageWidth: 200,
+        },
+    ]
     describe('submitSearch', () => {
         it('sets the search text, images, and remaining results when search is successful with no additional results', async () => {
             setGiphySearchMock(giphySearch4Results, 200, 'test', 0)
@@ -18,28 +48,7 @@ describe('Image Search Redux State', () => {
             const result = store.getState().imageSearch
             expect(result.searchText).toBe('test')
             expect(result.isLastSearchError).toBe(false)
-            expect(result.images).toEqual([
-                {
-                    url:
-                        'https://media0.giphy.com/media/bFvJkz0GyIi76/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'petting zoo spit GIF by Cheezburger',
-                },
-                {
-                    url:
-                        'https://media4.giphy.com/media/l2YWErhGkiqIYHqWA/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
-                {
-                    url:
-                        'https://media1.giphy.com/media/l2YWFaTbEGTtMuo1O/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
-                {
-                    url:
-                        'https://media2.giphy.com/media/l2YWiNCw0rjXUnNPW/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
-            ])
+            expect(result.images).toEqual(giphyExpected4)
             expect(result.areResultsRemaining).toBe(false)
         })
         it('sets remaining results to true when a search returns with additional results', async () => {
@@ -72,7 +81,14 @@ describe('Image Search Redux State', () => {
             const store = getStore({
                 imageSearch: {
                     ...initialImageSearchState,
-                    images: [{ url: 'test', alt: 'a fictional test image' }],
+                    images: [
+                        {
+                            url: 'test',
+                            alt: 'a fictional test image',
+                            imageHeight: 0,
+                            imageWidth: 0,
+                        },
+                    ],
                     searchText: 'loadMoreImages',
                 },
             })
@@ -80,27 +96,13 @@ describe('Image Search Redux State', () => {
             const result = store.getState().imageSearch
             expect(result.isLastSearchError).toBe(false)
             expect(result.images).toEqual([
-                { url: 'test', alt: 'a fictional test image' },
                 {
-                    url:
-                        'https://media0.giphy.com/media/bFvJkz0GyIi76/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'petting zoo spit GIF by Cheezburger',
+                    url: 'test',
+                    alt: 'a fictional test image',
+                    imageHeight: 0,
+                    imageWidth: 0,
                 },
-                {
-                    url:
-                        'https://media4.giphy.com/media/l2YWErhGkiqIYHqWA/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
-                {
-                    url:
-                        'https://media1.giphy.com/media/l2YWFaTbEGTtMuo1O/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
-                {
-                    url:
-                        'https://media2.giphy.com/media/l2YWiNCw0rjXUnNPW/200.gif?cid=0dab75ccz2uuearjpvsd9rbh3foz4qqk7okr320huywfhvfu&rid=200.gif',
-                    alt: 'season 2 episode 6 GIF by Twin Peaks on Showtime',
-                },
+                ...giphyExpected4,
             ])
             expect(result.areResultsRemaining).toBe(false)
         })
@@ -109,7 +111,14 @@ describe('Image Search Redux State', () => {
             const store = getStore({
                 imageSearch: {
                     ...initialImageSearchState,
-                    images: ['test'],
+                    images: [
+                        {
+                            url: 'test',
+                            alt: 'a fictional test image',
+                            imageHeight: 0,
+                            imageWidth: 0,
+                        },
+                    ],
                     searchText: 'loadMoreImages',
                 },
             })
@@ -123,7 +132,14 @@ describe('Image Search Redux State', () => {
             const store = getStore({
                 imageSearch: {
                     ...initialImageSearchState,
-                    images: ['test'],
+                    images: [
+                        {
+                            url: 'test',
+                            alt: 'a fictional test image',
+                            imageHeight: 0,
+                            imageWidth: 0,
+                        },
+                    ],
                     searchText: 'loadMoreImages',
                 },
             })
@@ -136,7 +152,14 @@ describe('Image Search Redux State', () => {
             const store = getStore({
                 imageSearch: {
                     ...initialImageSearchState,
-                    images: ['test'],
+                    images: [
+                        {
+                            url: 'test',
+                            alt: 'a fictional test image',
+                            imageHeight: 0,
+                            imageWidth: 0,
+                        },
+                    ],
                     searchText: 'loadMoreImages',
                 },
             })

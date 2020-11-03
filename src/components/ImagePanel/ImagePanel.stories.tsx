@@ -53,9 +53,9 @@ export const allResultsLoaded = () => {
         searchText: 'search',
         areResultsRemaining: false,
         images: [
-            { url: 'llama1.gif', alt: 'llama one' },
-            { url: 'llama2.gif', alt: 'llama two' },
-            { url: 'llama3.gif', alt: 'llama three' },
+            // { url: 'llama1.gif', alt: 'llama one' },
+            // { url: 'llama2.gif', alt: 'llama two' },
+            // { url: 'llama3.gif', alt: 'llama three' },
         ],
     })
     return imagePanelStoryTemplate(store)
@@ -66,9 +66,9 @@ export const moreResultsCanBeLoaded = () => {
         searchText: 'search',
         areResultsRemaining: true,
         images: [
-            { url: 'llama1.gif', alt: 'llama one' },
-            { url: 'llama2.gif', alt: 'llama two' },
-            { url: 'llama3.gif', alt: 'llama three' },
+            // { url: 'llama1.gif', alt: 'llama one' },
+            // { url: 'llama2.gif', alt: 'llama two' },
+            // { url: 'llama3.gif', alt: 'llama three' },
         ],
     })
     return imagePanelStoryTemplate(store)

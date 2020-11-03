@@ -7,6 +7,8 @@ import { AppState } from './root-reducer'
 interface ImageData {
     url: string
     alt: string
+    imageHeight: number
+    imageWidth: number
 }
 interface ImageSearchState {
     searchText: string
@@ -52,8 +54,10 @@ export const loadMoreImages = createAsyncThunk<
  */
 const getImages = (giphyResponse: GiphyImageSearchResponse) =>
     giphyResponse.data.map((imageResult) => ({
-        url: imageResult.images.fixed_height.url,
+        url: imageResult.images.fixed_width.url,
         alt: imageResult.title,
+        imageHeight: Number(imageResult.images.fixed_width.height),
+        imageWidth: Number(imageResult.images.fixed_width.width),
     }))
 
 /**
